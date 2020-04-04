@@ -1,0 +1,20 @@
+#!/bin/sh
+
+BUNDLE="$1"
+PREFIX="/Software/$BUNDLE"
+
+if [ ! -d "$PREFIX" ]; then
+  echo "No such bundle: $PREFIX"
+  exit 1
+fi
+
+shift
+COMMAND="$*"
+
+PATH="$PREFIX/bin:$PATH"
+CFLAGS="-I$PREFIX/include"
+CXXFLAGS="$CFLAGS"
+LDFLAGS="-L$PREFIX/lib"
+PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig"
+
+eval $COMMAND
